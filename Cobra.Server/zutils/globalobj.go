@@ -1,12 +1,12 @@
 package zutils
 
 import (
-	"../ziface"
-	"../zlog"
-	"./commandline/args"
-	"./commandline/uflag"
 	"encoding/json"
 	"fmt"
+	"learn_zinx/Cobra.Server/ziface"
+	"learn_zinx/Cobra.Server/zlog"
+	"learn_zinx/Cobra.Server/zutils/commandline/args"
+	"learn_zinx/Cobra.Server/zutils/commandline/uflag"
 	"os"
 )
 

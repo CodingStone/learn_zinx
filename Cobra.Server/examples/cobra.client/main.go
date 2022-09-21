@@ -6,7 +6,7 @@ import (
 	"net"
 	"time"
 
-	"../../znet"
+	"learn_zinx/Cobra.Server/znet"
 )
 
 /*

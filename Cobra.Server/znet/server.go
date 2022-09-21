@@ -1,10 +1,10 @@
 package znet
 
 import (
-	"../ziface"
-	"../zutils"
 	"errors"
 	"fmt"
+	"learn_zinx/Cobra.Server/ziface"
+	"learn_zinx/Cobra.Server/zutils"
 	"net"
 )
 

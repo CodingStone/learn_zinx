@@ -1,11 +1,11 @@
 package znet
 
 import (
-	"../ziface"
-	"../zutils"
 	"bytes"
 	"encoding/binary"
 	"errors"
+	"learn_zinx/Cobra.Server/ziface"
+	"learn_zinx/Cobra.Server/zutils"
 )
 
 const defaultHeaderLen uint32 = 8

@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"../ziface"
+	"learn_zinx/Cobra.Server/ziface"
 )
 
 // run in terminal:

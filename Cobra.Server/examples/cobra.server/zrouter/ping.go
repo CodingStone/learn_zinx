@@ -1,9 +1,9 @@
 package zrouter
 
 import (
-	"../../../ziface"
-	"../../../znet"
 	"fmt"
+	"learn_zinx/Cobra.Server/ziface"
+	"learn_zinx/Cobra.Server/znet"
 )
 
 //ping test 自定义路由

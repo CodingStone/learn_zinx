@@ -1,9 +1,9 @@
 package main
 
 import (
-	"../../ziface"
-	"../../znet"
-	"./zrouter"
+	"learn_zinx/Cobra.Server/examples/cobra.server/zrouter"
+	"learn_zinx/Cobra.Server/ziface"
+	"learn_zinx/Cobra.Server/znet"
 )
 
 

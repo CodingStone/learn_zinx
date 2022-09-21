@@ -1,7 +1,7 @@
 package args
 
 import (
-	"../uflag"
+	"learn_zinx/Cobra.Server/zutils/commandline/uflag"
 	"os"
 	"path"
 )

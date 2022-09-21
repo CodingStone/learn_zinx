@@ -1,9 +1,9 @@
 package znet
 
 import (
-	"../ziface"
 	"errors"
 	"fmt"
+	"learn_zinx/Cobra.Server/ziface"
 	"sync"
 )
 

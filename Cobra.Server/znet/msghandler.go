@@ -1,9 +1,9 @@
 package znet
 
 import (
-	"../ziface"
-	"../zutils"
 	"fmt"
+	"learn_zinx/Cobra.Server/ziface"
+	"learn_zinx/Cobra.Server/zutils"
 	"strconv"
 )
 

@@ -1,7 +1,7 @@
 package znet
 
 import (
-	"../ziface"
+	"learn_zinx/Cobra.Server/ziface"
 )
 
 type Option func(s *Server)

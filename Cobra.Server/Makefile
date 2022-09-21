@@ -5,7 +5,7 @@ SERVICE := zinx
 CUR_PWD := $(shell pwd)
 
 SERVER_DEMO_PATH := $(CUR_PWD)/examples/cobra.server
-SERVER_DEMO_BIN := $(SERVER_DEMO_PATH)/server
+SERVER_DEMO_BIN := $(CUR_PWD)/bin
 
 
 AUTHOR := Rock

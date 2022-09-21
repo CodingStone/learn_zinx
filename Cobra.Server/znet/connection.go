@@ -1,12 +1,12 @@
 package znet
 
 import (
-	"../ziface"
-	"../zutils"
 	"context"
 	"errors"
 	"fmt"
 	"io"
+	"learn_zinx/Cobra.Server/ziface"
+	"learn_zinx/Cobra.Server/zutils"
 	"net"
 	"sync"
 	"time"
