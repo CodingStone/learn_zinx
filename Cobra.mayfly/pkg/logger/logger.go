@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"learn_zinx/Cobra.mayfly/pkg/config"
+	"learn_zinx/Cobra.mayfly/pkg/global"
 	"os"
 	"strings"
 	"time"
@@ -58,5 +59,5 @@ func Init() {
 		}
 		Log.Out = file
 	}
-	// 这里还需要写到全局变量中
+	global.Log = Log
 }
