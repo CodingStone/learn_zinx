@@ -15,4 +15,7 @@ func RunWebServer() {
 	logger.Init()
 	// 初始化jwt key 与exprie time等
 	ctx.InitTokenConfig()
+
+	// 打印banner
+	printBanner()
 }
