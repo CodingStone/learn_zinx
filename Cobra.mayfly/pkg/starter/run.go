@@ -18,4 +18,10 @@ func RunWebServer() {
 
 	// 打印banner
 	printBanner()
+
+	// 初始化并赋值数据库全局变量
+	initDb()
+
+	//运行web服务
+	runWebServer()
 }

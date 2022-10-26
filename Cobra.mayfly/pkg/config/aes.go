@@ -2,8 +2,19 @@ package config
 
 import (
 	"fmt"
+	"learn_zinx/Cobra.mayfly/pkg/utils"
 	"learn_zinx/Cobra.mayfly/pkg/utils/assert"
 )
+
+// 编码并base64
+func (a *Aes) EncryptBase64(data []byte) (string, error) {
+	return utils.AesEncryptBase64(data, []byte(a.Key))
+}
+
+// base64解码后再aes解码
+func (a *Aes) DecryptBase64(data string) ([]byte, error) {
+	return utils.AesDecryptBase64(data, []byte(a.Key))
+}
 
 type Aes struct {
 	Key string `yaml:"key"`

@@ -1,5 +1,7 @@
 package config
 
+import "fmt"
+
 type Tls struct {
 	Enable  bool   `yaml:"enable"`   //是否开启
 	KeyFile string `yaml:"key_file"` //私钥位置
@@ -7,13 +9,13 @@ type Tls struct {
 }
 
 type Static struct {
-	RelativePath string `yaml:"relative_path"`
+	RelativePath string `yaml:"relative-path"`
 	Root         string `yaml:"root"`
 }
 
 type StaticFile struct {
-	RelativePath string `yaml:"relative_path"`
-	Root         string `yaml:"root"`
+	RelativePath string `yaml:"relative-path"`
+	Filepath     string `yaml:"filepath"`
 }
 
 type Server struct {
@@ -24,4 +26,17 @@ type Server struct {
 	Static         *[]*Static     `yaml:"static"`
 	StaticFile     *[]*StaticFile `yaml:"static_file"`
 	MachineRecPath string         `yaml:"machine_rec_path"` //机器终端操作回放文件存储路径
+}
+
+// 获取终端回访记录存放基础路径, 如果配置文件未配置，则默认为./rec
+func (s *Server) GetMachineRecPath() string {
+	path := s.MachineRecPath
+	if path == "" {
+		return "./rec"
+	}
+	return path
+}
+
+func (s *Server) GetPort() string {
+	return fmt.Sprintf(":%d", s.Port)
 }

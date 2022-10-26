@@ -10,3 +10,11 @@ func IsTrue(condition bool, panicMsg string, params ...interface{}) {
 		panic(panicMsg)
 	}
 }
+
+func State(condition bool, panicMsg string, params ...interface{}) {
+	IsTrue(condition, panicMsg, params...)
+}
+
+func NotEmpty(str string, panicMsg string, params ...interface{}) {
+	IsTrue(str != "", panicMsg, params...)
+}
