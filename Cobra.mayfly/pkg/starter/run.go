@@ -9,8 +9,8 @@ import (
 
 func RunWebServer() {
 	fmt.Println("Run Web Server~~~")
-	// 初始化项目配置，从yaml中读取配置项
-	config.Init()
+	// 初始化项目配置，从yaml中读取配置项。
+	config.Init() // # 会对配置文件类型实例化
 	// 初始化日志配置信息
 	logger.Init()
 	// 初始化jwt key 与exprie time等

@@ -1,7 +1,7 @@
 package repository
 
 import (
-	entity "learn_zinx/Cobra.mayfly/internal/db/domain/entry"
+	entity "learn_zinx/Cobra.mayfly/internal/db/domain/entity"
 	"learn_zinx/Cobra.mayfly/pkg/model"
 )
 

@@ -6,15 +6,16 @@ const (
 	ConfigKeyUseLoginCaptcha string = "UseLoginCaptcha" // 是否使用登录验证码
 )
 
+// # 后面格式为 json 因为要用json形式 进行初始化
 type Config struct {
-	model.Model
-	Name   string `json:"name"` // 配置名
-	Key    string `json:"key"`  // 配置key
-	Value  string `json:"value"`
-	Remark string `json:"remark"`
+	model.Model        // # 基本数据操作模型
+	Name        string `json:"name"` // 配置名
+	Key         string `json:"key"`  // 配置key
+	Value       string `json:"value"`
+	Remark      string `json:"remark"`
 }
 
-func (a *Config) TableName() string {
+func (a *Config) TableName() string { // # 表名
 	return "t_sys_config"
 }
 

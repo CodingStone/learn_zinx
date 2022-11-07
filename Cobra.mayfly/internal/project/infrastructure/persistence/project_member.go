@@ -1,10 +1,10 @@
 package persistence
 
 import (
-	"mayfly-go/internal/project/domain/entity"
-	"mayfly-go/internal/project/domain/repository"
-	"mayfly-go/pkg/biz"
-	"mayfly-go/pkg/model"
+	"learn_zinx/Cobra.mayfly/internal/project/domain/entity"
+	"learn_zinx/Cobra.mayfly/internal/project/domain/repository"
+	"learn_zinx/Cobra.mayfly/pkg/biz"
+	"learn_zinx/Cobra.mayfly/pkg/model"
 )
 
 type projectMemberRepoImpl struct{}

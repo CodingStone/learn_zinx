@@ -5,9 +5,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"io/fs"
 	common_router "learn_zinx/Cobra.mayfly/internal/common/router"
+	sys_router "learn_zinx/Cobra.mayfly/internal/sys/router"
 	"learn_zinx/Cobra.mayfly/pkg/config"
 	"learn_zinx/Cobra.mayfly/pkg/middleware"
 	"learn_zinx/Cobra.mayfly/static"
+
 	"net/http"
 )
 
@@ -62,6 +64,9 @@ func InitRouter() *gin.Engine {
 	api := router.Group("/api")
 	{
 		common_router.InitIndexRouter(api)
+		common_router.InitCommonRouter(api)
+		sys_router.Init(api) // # 这里会注册系统路由，包括登陆等多个路由
+		// 这里面还有很多router
 	}
 
 	return router

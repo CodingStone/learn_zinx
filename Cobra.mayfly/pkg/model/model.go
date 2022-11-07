@@ -133,6 +133,8 @@ func ListByOrder(model interface{}, list interface{}, order ...string) {
 //
 // 若 error不为nil，则为不存在该记录
 func GetBy(model interface{}, cols ...string) error {
+	// # 查询 数据基础类
+	fmt.Printf("global.Db is: %+v", global.Db)
 	return global.Db.Select(cols).Where(model).First(model).Error
 }
 

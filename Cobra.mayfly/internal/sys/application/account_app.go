@@ -1,6 +1,7 @@
 package application
 
 import (
+	"fmt"
 	"learn_zinx/Cobra.mayfly/internal/sys/domain/entity"
 	"learn_zinx/Cobra.mayfly/internal/sys/domain/repository"
 	"learn_zinx/Cobra.mayfly/pkg/biz"
@@ -22,6 +23,7 @@ type Account interface {
 	Delete(id uint64)
 }
 
+// # 账号模型实例化， 对应账号操作方法
 func newAccountApp(accountRepo repository.Account) Account {
 	return &accountAppImpl{
 		accountRepo: accountRepo,
@@ -34,7 +36,8 @@ type accountAppImpl struct {
 
 // 根据条件获取账号信息
 func (a *accountAppImpl) GetAccount(condition *entity.Account, cols ...string) error {
-	return a.accountRepo.GetAccount(condition, cols...)
+	fmt.Printf("condition is: %+v\n", condition)
+	return a.accountRepo.GetAccount(condition, cols...) // # 到db中取数据
 }
 
 func (a *accountAppImpl) GetPageList(condition *entity.Account, pageParam *model.PageParam, toEntity interface{}, orderBy ...string) *model.PageResult {

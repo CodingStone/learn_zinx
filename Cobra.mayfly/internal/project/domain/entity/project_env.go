@@ -1,6 +1,6 @@
 package entity
 
-import "mayfly-go/pkg/model"
+import "learn_zinx/Cobra.mayfly/pkg/model"
 
 // 项目环境
 type ProjectEnv struct {

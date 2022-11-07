@@ -1,7 +1,7 @@
 package router
 
 import (
-	"mayfly-go/internal/sys/api"
+	"learn_zinx/Cobra.mayfly/internal/sys/api"
 
 	"github.com/gin-gonic/gin"
 )

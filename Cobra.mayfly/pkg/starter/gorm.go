@@ -9,8 +9,9 @@ import (
 	"learn_zinx/Cobra.mayfly/pkg/global"
 )
 
+// # 初始化db链接
 func initDb() {
-
+	global.Db = gormMysql()
 }
 
 func gormMysql() *gorm.DB {

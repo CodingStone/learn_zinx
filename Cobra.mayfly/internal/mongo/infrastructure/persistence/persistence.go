@@ -1,7 +1,7 @@
 package persistence
 
 import (
-	"mayfly-go/internal/mongo/domain/repository"
+	"learn_zinx/Cobra.mayfly/internal/mongo/domain/repository"
 )
 
 var (

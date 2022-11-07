@@ -3,9 +3,9 @@ package config
 import "fmt"
 
 type Tls struct {
-	Enable  bool   `yaml:"enable"`   //是否开启
-	KeyFile string `yaml:"key_file"` //私钥位置
-	CerFile string `yaml:"cer_file"` //证书位置
+	Enable   bool   `yaml:"enable"`   //是否开启
+	KeyFile  string `yaml:"key-file"` //私钥位置
+	CertFile string `yaml:"cer-file"` //证书位置
 }
 
 type Static struct {

@@ -1,6 +1,7 @@
 package ctx
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"io"
 	"learn_zinx/Cobra.mayfly/pkg/ginx"
@@ -26,6 +27,7 @@ type ReqCtx struct {
 	NoRes bool  //无需返回结果，即文件下载等
 }
 
+// # 执行处理请求核心调用方法
 func (rc *ReqCtx) Handle(handler handlerFunc) {
 	ginCtx := rc.GinCtx
 	defer func() {
@@ -36,20 +38,22 @@ func (rc *ReqCtx) Handle(handler handlerFunc) {
 		//应用所有请求，处理处理器
 		ApplyHandlerInterceptor(afterHandlers, rc)
 	}()
+	// # 上下文一定是被初始化的。
 	assert.IsTrue(ginCtx != nil, "ginContext == nil")
-
 	// 默认为不记录请求参数，可在handler回调函数中覆盖赋值
 	rc.ReqParam = 0
 	//默认相应结果为nil，可在handler中赋值
 	rc.ResData = nil
 
 	//调用请求前所有处理器
-	err := ApplyHandlerInterceptor(beforeHandlers, rc)
+	err := ApplyHandlerInterceptor(beforeHandlers, rc) //# 调用请求处理前拦截器
 	if err != nil {
 		panic(err)
 	}
-	begin := time.Now()
-	handler(rc) // 处理当前请求
+	begin := time.Now() // #计算请求耗时
+
+	handler(rc) //# 处理当前请求 相关联的请求上下文
+	println("handler 函数退出")
 	rc.timed = time.Since(begin).Milliseconds()
 	if !rc.NoRes {
 		ginx.SuccessRes(ginCtx, rc.ResData) // 返回结果
@@ -66,6 +70,7 @@ func NewReqCtx() *ReqCtx {
 	return &ReqCtx{}
 }
 
+// #实例化一个请求请求上下文
 func NewReqCtxWithGin(g *gin.Context) *ReqCtx {
 	return &ReqCtx{GinCtx: g}
 }
@@ -82,7 +87,7 @@ func (r *ReqCtx) WithRequiredPermission(permission *Permission) *ReqCtx {
 	return r
 }
 
-// 是否需要token
+// 是否需要token [这里表示永远不需要, 注意这块含义]
 func (r *ReqCtx) WithNeedToken(needToken bool) *ReqCtx {
 	r.RequiredPermission = &Permission{NeedToken: false}
 	return r
@@ -92,7 +97,7 @@ type HandlerInterceptorFunc func(*ReqCtx) error
 type HandlerInterceptors []HandlerInterceptorFunc
 
 var (
-	beforeHandlers HandlerInterceptors
+	beforeHandlers HandlerInterceptors // # 请求前处理器
 	afterHandlers  HandlerInterceptors
 )
 
@@ -107,6 +112,7 @@ func UseAfterHandlerInterceptor(b HandlerInterceptorFunc) {
 
 // 应用指定处理器拦截器，如果又一个错误则直接返回错误
 func ApplyHandlerInterceptor(his HandlerInterceptors, rc *ReqCtx) interface{} {
+	fmt.Printf("HandlerInterceptors len: %v\n", len(his))
 	for _, handler := range his {
 		if err := handler(rc); err != nil {
 			return err

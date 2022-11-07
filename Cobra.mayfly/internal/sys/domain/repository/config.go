@@ -5,6 +5,7 @@ import (
 	"learn_zinx/Cobra.mayfly/pkg/model"
 )
 
+// # 基本操作约束、相当于定义接口
 type Config interface {
 	GetPageList(condition *entity.Config, pageParam *model.PageParam, toEntity interface{}, orderBy ...string) *model.PageResult
 

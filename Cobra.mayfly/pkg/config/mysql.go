@@ -1,9 +1,11 @@
 package config
 
+import "fmt"
+
 type Mysql struct {
 	Host         string `mapstructure:"path" json:"host" yaml:"host"`
 	Config       string `mapstructure:"config" json:"config" yaml:"config"`
-	Dbname       string `mapstructure:"db-name" json:"dbname" yaml:"dbname"`
+	Dbname       string `mapstructure:"db-name" json:"dbname" yaml:"db-name"` // # 注意这些描述信息和配置中是一一对一个的
 	Username     string `mapstructure:"username" json:"username" yaml:"username"`
 	Password     string `mapstructure:"password" json:"password" yaml:"password"`
 	MaxIdleConns int    `mapstructure:"max-idle-conns" json:"maxIdleConns" yaml:"max-idle-conns"`
@@ -13,5 +15,6 @@ type Mysql struct {
 }
 
 func (m *Mysql) Dsn() string {
+	fmt.Printf("Mysql Config: %s\n", m.Username+":"+m.Password+"@tcp("+m.Host+")/"+m.Dbname+"?"+m.Config)
 	return m.Username + ":" + m.Password + "@tcp(" + m.Host + ")/" + m.Dbname + "?" + m.Config
 }

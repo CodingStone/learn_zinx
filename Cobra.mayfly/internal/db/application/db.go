@@ -4,8 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"learn_zinx/Cobra.mayfly/internal/constant"
 	"learn_zinx/Cobra.mayfly/internal/db/domain/entity"
 	"learn_zinx/Cobra.mayfly/internal/db/domain/repository"
+	machineapp "learn_zinx/Cobra.mayfly/internal/machine/application"
+
+	"learn_zinx/Cobra.mayfly/internal/machine/infrastructure/machine"
 	"learn_zinx/Cobra.mayfly/pkg/biz"
 	"learn_zinx/Cobra.mayfly/pkg/cache"
 	"learn_zinx/Cobra.mayfly/pkg/global"

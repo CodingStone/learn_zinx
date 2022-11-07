@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"learn_zinx/Cobra.mayfly/internal/sys/api/form"
 	"learn_zinx/Cobra.mayfly/internal/sys/application"
 	"learn_zinx/Cobra.mayfly/internal/sys/domain/entity"
@@ -10,6 +11,7 @@ import (
 	"learn_zinx/Cobra.mayfly/pkg/utils"
 )
 
+// # 与具体业务关联起来 ConfigApp 是数据库链接。 并实现基本操作
 type Config struct {
 	ConfigApp application.Config
 }
@@ -21,9 +23,11 @@ func (c *Config) Configs(rc *ctx.ReqCtx) {
 }
 
 func (c *Config) GetConfigValueByKey(rc *ctx.ReqCtx) {
-	key := rc.GinCtx.Query("key")
+	key := rc.GinCtx.Query("key") // # 获得请求中key参数
+	fmt.Printf("key is: %s\n", key)
 	biz.NotEmpty(key, "key不能为空")
-	rc.ResData = c.ConfigApp.GetConfig(key).Value
+	// #具体
+	rc.ResData = c.ConfigApp.GetConfig(key).Value // # 进行数据库操作 查询得到数据
 }
 
 func (c *Config) SaveConfig(rc *ctx.ReqCtx) {

@@ -30,15 +30,16 @@ type Account struct {
 
 // @router /accounts/login [post]
 func (a *Account) Login(rc *ctx.ReqCtx) {
-	loginForm := &form.LoginForm{}
-	ginx.BindJsonAndValid(rc.GinCtx, loginForm)
+	loginForm := &form.LoginForm{}              // # 获得表单数据，并将数据赋值给特定值的
+	ginx.BindJsonAndValid(rc.GinCtx, loginForm) // # 验证值类型
 
 	// 判断是否有开启登录验证码校验
-	if a.ConfigApp.GetConfig(entity.ConfigKeyUseLoginCaptcha).BoolValue(true) {
+	if a.ConfigApp.GetConfig(entity.ConfigKeyUseLoginCaptcha).BoolValue(true) { // # 从db中判断是不是需要验证码
 		// 校验验证码
-		biz.IsTrue(captcha.Verify(loginForm.Cid, loginForm.Captcha), "验证码错误")
+		biz.IsTrue(captcha.Verify(loginForm.Cid, loginForm.Captcha), "验证码错误") // # 用的Cid（密钥生成id 和 验证码去验证）
 	}
 
+	// # 用于解密获得原始密码
 	originPwd, err := utils.DefaultRsaDecrypt(loginForm.Password, true)
 	biz.ErrIsNilAppendErr(err, "解密密码错误: %s")
 
