@@ -84,6 +84,7 @@ func (r *resourceAppImpl) Delete(id uint64) {
 	model.DeleteByCondition(&entity.RoleResource{ResourceId: id})
 }
 
+// # 获得用户资源
 func (r *resourceAppImpl) GetAccountResources(accountId uint64, toEntity interface{}) {
 	r.resourceRepo.GetAccountResources(accountId, toEntity)
 }

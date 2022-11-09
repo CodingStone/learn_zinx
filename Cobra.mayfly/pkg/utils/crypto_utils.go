@@ -12,7 +12,6 @@ import (
 	"encoding/hex"
 	"encoding/pem"
 	"errors"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -31,6 +30,7 @@ func PwdHash(password string) string {
 
 // 检查密码是否一致
 func CheckPwdHash(password, hash string) bool {
+	// # 这种写法不会泄漏密码，即使密码存在库中
 	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)) == nil
 }
 
@@ -94,6 +94,7 @@ func RsaDecrypt(privateKeyStr string, data []byte) ([]byte, error) {
 // 使用系统默认的私钥解密
 // @param base64 字符串是否使用base64编码
 func DefaultRsaDecrypt(data string, useBase64 bool) (string, error) {
+
 	// 空字符串不解密
 	if data == "" {
 		return "", nil
@@ -118,6 +119,7 @@ func DefaultRsaDecrypt(data string, useBase64 bool) (string, error) {
 
 // 获取系统的RSA公钥
 func GetRsaPublicKey() (string, error) {
+	// # 如果存在密钥对 直接返回
 	if len(RsaPair) == 2 {
 		return RsaPair[1], nil
 	}

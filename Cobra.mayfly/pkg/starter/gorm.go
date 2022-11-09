@@ -33,7 +33,7 @@ func gormMysql() *gorm.DB {
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix:   "t_", // 表命名前缀
 			SingularTable: true,
-		}, Logger: logger.Default.LogMode(logger.Error), // 改为logger.Info即可显示sql语句
+		}, Logger: logger.Default.LogMode(logger.Info), // 改为logger.Info即可显示sql语句. #原来这个值是Error类型
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), ormConfig); err != nil {
 		global.Log.Panicf("连接mysql失败！[%s]", err.Error())

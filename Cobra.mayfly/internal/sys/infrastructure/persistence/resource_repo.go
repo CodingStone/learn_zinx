@@ -38,6 +38,7 @@ func (r *resourceRepoImpl) GetByCondition(condition *entity.Resource, cols ...st
 	return model.GetBy(condition, cols...)
 }
 
+// # 面对复杂查询结构 直接使用sql查询
 func (r *resourceRepoImpl) GetAccountResources(accountId uint64, toEntity interface{}) {
 	sql := `SELECT
 	           m.id,

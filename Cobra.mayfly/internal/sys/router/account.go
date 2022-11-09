@@ -18,12 +18,12 @@ func InitAccountRouter(router *gin.RouterGroup) {
 		ConfigApp:   application.GetConfigApp(),
 	}
 	{
-		// 用户登录
+		// 用户登录 # 实例化一条日志记录。
 		loginLog := ctx.NewLogInfo("用户登录").WithSave(true)
 		account.POST("login", func(g *gin.Context) {
 			ctx.NewReqCtxWithGin(g).
 				WithNeedToken(false).
-				WithLog(loginLog).
+				WithLog(loginLog). // # 将日志挂到请求对象中
 				Handle(a.Login)
 		})
 

@@ -7,7 +7,6 @@ import (
 	"learn_zinx/Cobra.mayfly/internal/sys/application"
 	"learn_zinx/Cobra.mayfly/internal/sys/domain/entity"
 	"learn_zinx/Cobra.mayfly/pkg/biz"
-	"learn_zinx/Cobra.mayfly/pkg/captcha"
 	"learn_zinx/Cobra.mayfly/pkg/ctx"
 	"learn_zinx/Cobra.mayfly/pkg/ginx"
 	"learn_zinx/Cobra.mayfly/pkg/model"
@@ -34,18 +33,20 @@ func (a *Account) Login(rc *ctx.ReqCtx) {
 	ginx.BindJsonAndValid(rc.GinCtx, loginForm) // # 验证值类型
 
 	// 判断是否有开启登录验证码校验
-	if a.ConfigApp.GetConfig(entity.ConfigKeyUseLoginCaptcha).BoolValue(true) { // # 从db中判断是不是需要验证码
-		// 校验验证码
-		biz.IsTrue(captcha.Verify(loginForm.Cid, loginForm.Captcha), "验证码错误") // # 用的Cid（密钥生成id 和 验证码去验证）
-	}
+	//if a.ConfigApp.GetConfig(entity.ConfigKeyUseLoginCaptcha).BoolValue(true) { // # 从db中判断是不是需要验证码
+	//	// 校验验证码
+	//	biz.IsTrue(captcha.Verify(loginForm.Cid, loginForm.Captcha), "验证码错误") // # 用的Cid（密钥生成id 和 验证码去验证）
+	//}
 
 	// # 用于解密获得原始密码
 	originPwd, err := utils.DefaultRsaDecrypt(loginForm.Password, true)
 	biz.ErrIsNilAppendErr(err, "解密密码错误: %s")
 
 	account := &entity.Account{Username: loginForm.Username}
+	fmt.Printf("account:%+v\n", account)
 	err = a.AccountApp.GetAccount(account, "Id", "Username", "Password", "Status", "LastLoginTime", "LastLoginIp")
-	biz.ErrIsNil(err, "用户名或密码错误")
+	biz.ErrIsNil(err, "用户名或密码错误(查询错误)")
+	fmt.Printf("originPwd is: %v, %v\n", originPwd, account.Password)
 	biz.IsTrue(utils.CheckPwdHash(originPwd, account.Password), "用户名或密码错误")
 	biz.IsTrue(account.IsEnable(), "该账号不可用")
 
