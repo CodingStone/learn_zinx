@@ -40,6 +40,7 @@ func CreateToken(userId uint64, username string) string {
 	return tokenString
 }
 
+// # 从token中获得用户信息
 func ParseToken(tokenStr string) (*model.LoginAccount, error) {
 	if tokenStr == "" {
 		return nil, errors.New("token error")

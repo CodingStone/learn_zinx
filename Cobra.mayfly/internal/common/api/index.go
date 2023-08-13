@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	dbapp "learn_zinx/Cobra.mayfly/internal/db/application"
 	dbentity "learn_zinx/Cobra.mayfly/internal/db/domain/entity"
 	machineapp "learn_zinx/Cobra.mayfly/internal/machine/application"
@@ -17,6 +18,7 @@ type Index struct {
 	MachineApp machineapp.Machine
 	DbApp      dbapp.Db
 	RedisApp   redisapp.Redis
+	Val        int
 }
 
 func (i *Index) Count(rc *ctx.ReqCtx) {
@@ -26,4 +28,8 @@ func (i *Index) Count(rc *ctx.ReqCtx) {
 		"dbNum":      i.DbApp.Count(new(dbentity.Db)),
 		"redisNum":   i.RedisApp.Count(new(redisentity.Redis)),
 	}
+}
+func (i *Index) Test(num int) int {
+	fmt.Println("I am test!", i.Val+num)
+	return i.Val + num
 }

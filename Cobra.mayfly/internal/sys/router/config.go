@@ -1,7 +1,6 @@
 package router
 
 import (
-	"fmt"
 	"learn_zinx/Cobra.mayfly/internal/sys/api"
 	"learn_zinx/Cobra.mayfly/internal/sys/application"
 	"learn_zinx/Cobra.mayfly/pkg/ctx"
@@ -12,7 +11,6 @@ import (
 func InitSysConfigRouter(router *gin.RouterGroup) {
 	//# r：表示API请求，里面包含具体请求对应处理方法 【后边参数是数据库操作方法集合】
 	r := &api.Config{ConfigApp: application.GetConfigApp()}
-	fmt.Printf("这是啥玩意儿～～～ %+v \n", r)
 	db := router.Group("sys/configs")
 	{
 		db.GET("", func(c *gin.Context) {

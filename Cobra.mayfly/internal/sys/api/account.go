@@ -7,6 +7,7 @@ import (
 	"learn_zinx/Cobra.mayfly/internal/sys/application"
 	"learn_zinx/Cobra.mayfly/internal/sys/domain/entity"
 	"learn_zinx/Cobra.mayfly/pkg/biz"
+	"learn_zinx/Cobra.mayfly/pkg/captcha"
 	"learn_zinx/Cobra.mayfly/pkg/ctx"
 	"learn_zinx/Cobra.mayfly/pkg/ginx"
 	"learn_zinx/Cobra.mayfly/pkg/model"
@@ -33,20 +34,19 @@ func (a *Account) Login(rc *ctx.ReqCtx) {
 	ginx.BindJsonAndValid(rc.GinCtx, loginForm) // # 验证值类型
 
 	// 判断是否有开启登录验证码校验
-	//if a.ConfigApp.GetConfig(entity.ConfigKeyUseLoginCaptcha).BoolValue(true) { // # 从db中判断是不是需要验证码
-	//	// 校验验证码
-	//	biz.IsTrue(captcha.Verify(loginForm.Cid, loginForm.Captcha), "验证码错误") // # 用的Cid（密钥生成id 和 验证码去验证）
-	//}
+	if a.ConfigApp.GetConfig(entity.ConfigKeyUseLoginCaptcha).BoolValue(true) { // # 从db中判断是不是需要验证码
+		// 校验验证码
+		biz.IsTrue(captcha.Verify(loginForm.Cid, loginForm.Captcha), "验证码错误") // # 用的Cid（密钥生成id 和 验证码去验证）
+	}
 
-	// # 用于解密获得原始密码
+	// # 用于解密获得原始密码，这种加密方法对后端库来说，也是不可见的
 	originPwd, err := utils.DefaultRsaDecrypt(loginForm.Password, true)
 	biz.ErrIsNilAppendErr(err, "解密密码错误: %s")
 
+	// # 定义一个用户实体
 	account := &entity.Account{Username: loginForm.Username}
-	fmt.Printf("account:%+v\n", account)
 	err = a.AccountApp.GetAccount(account, "Id", "Username", "Password", "Status", "LastLoginTime", "LastLoginIp")
 	biz.ErrIsNil(err, "用户名或密码错误(查询错误)")
-	fmt.Printf("originPwd is: %v, %v\n", originPwd, account.Password)
 	biz.IsTrue(utils.CheckPwdHash(originPwd, account.Password), "用户名或密码错误")
 	biz.IsTrue(account.IsEnable(), "该账号不可用")
 
@@ -55,7 +55,7 @@ func (a *Account) Login(rc *ctx.ReqCtx) {
 
 	var resources vo.AccountResourceVOList
 	// 获取账号菜单资源
-	a.ResourceApp.GetAccountResources(account.Id, &resources)
+	a.ResourceApp.GetAccountResources(account.Id, &resources) // #获得账号拥有的 菜单权限 和 资源权限
 	// 菜单树与权限code数组
 	var menus vo.AccountResourceVOList
 	var permissions []string
@@ -167,6 +167,7 @@ func (a *Account) AccountInfo(rc *ctx.ReqCtx) {
 // 更新个人账号信息
 func (a *Account) UpdateAccount(rc *ctx.ReqCtx) {
 	updateForm := &form.AccountUpdateForm{}
+	// # 在定义jsonschema 时对字段进行验证
 	ginx.BindJsonAndValid(rc.GinCtx, updateForm)
 
 	updateAccount := new(entity.Account)

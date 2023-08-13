@@ -27,6 +27,7 @@ type msgAppImpl struct {
 	msgRepo repository.Msg
 }
 
+// 查询消息列表
 func (a *msgAppImpl) GetPageList(condition *entity.Msg, pageParam *model.PageParam, toEntity interface{}, orderBy ...string) *model.PageResult {
 	return a.msgRepo.GetPageList(condition, pageParam, toEntity)
 }

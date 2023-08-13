@@ -36,8 +36,10 @@ type DefaultPermissionCodeRegistry struct {
 	cache *cache.TimedCache
 }
 
+// # 保存权限缓存
 func (r *DefaultPermissionCodeRegistry) SaveCodes(userId uint64, codes []string) {
 	if r.cache == nil {
+		// #cache是自己实现的
 		r.cache = cache.NewTimedCache(time.Minute*time.Duration(config.Conf.Jwt.ExpireTime), 5*time.Second)
 	}
 	r.cache.Put(fmt.Sprintf("%v", userId), codes)
@@ -86,6 +88,7 @@ func SetPermissionCodeRegistery(pcr PermissionCodeRegistry) {
 func PermissionHandler(rc *ReqCtx) error {
 	permission := rc.RequiredPermission
 	// 如果需要的权限信息不为空，并且不需要token，则不返回错误，继续后续逻辑
+	// fmt.Printf("权限验证信息: %v, code:%s\n", permission.NeedToken, permission.Code)
 	if permission != nil && !permission.NeedToken {
 		return nil
 	}
@@ -107,6 +110,7 @@ func PermissionHandler(rc *ReqCtx) error {
 			return biz.PermissionErr
 		}
 	}
+	// # 在token验证里面 获得 用户信息
 	rc.LoginAccount = loginAccount
 	return nil
 }

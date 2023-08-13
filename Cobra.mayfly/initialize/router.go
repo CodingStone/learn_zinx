@@ -4,14 +4,23 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"io/fs"
-	common_router "learn_zinx/Cobra.mayfly/internal/common/router"
-	sys_router "learn_zinx/Cobra.mayfly/internal/sys/router"
 	"learn_zinx/Cobra.mayfly/pkg/config"
 	"learn_zinx/Cobra.mayfly/pkg/middleware"
 	"learn_zinx/Cobra.mayfly/static"
+	"net/url"
+	"reflect"
 
 	"net/http"
 )
+
+type Message struct {
+	Channel string `uri:"channel" binding:"required"`
+	Action  string `uri:"action" binding:"required"`
+}
+type Data struct {
+	Message
+	Query url.Values
+}
 
 func WrapStaticHandler(h http.Handler) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -60,14 +69,35 @@ func InitRouter() *gin.Engine {
 	if serverConfig.Cors {
 		router.Use(middleware.Cors())
 	}
-	// 设置路由组
-	api := router.Group("/api")
-	{
-		common_router.InitIndexRouter(api)
-		common_router.InitCommonRouter(api)
-		sys_router.Init(api) // # 这里会注册系统路由，包括登陆等多个路由
-		// 这里面还有很多router
-	}
+	// 设置路由组,  原来方法
+	//api := router.Group("/api")
+	//{
+	//	common_router.InitIndexRouter(api)
+	//	common_router.InitCommonRouter(api)
+	//	sys_router.Init(api) // # 这里会注册系统路由，包括登陆等多个路由
+	//	project_router.Init(api)
+	//	machine_router.Init(api)
+	//	// 这里面还有很多router
+	//
+	//}
+	router.GET("/api/:channel/:action", func(c *gin.Context) {
+		var message Message
 
+		if err := c.ShouldBindUri(&message); err != nil {
+			c.JSON(400, gin.H{"msg": err.Error()})
+			return
+		}
+		query := c.Request.URL.Query()
+		fmt.Printf("%v, %v", reflect.TypeOf(query), query)
+		data := Data{
+			Message: Message{
+				message.Channel,
+				message.Action,
+			},
+			Query: query,
+		}
+		fmt.Printf("%v", data)
+		c.JSON(200, gin.H{"channel": message.Channel, "action": message.Action})
+	})
 	return router
 }

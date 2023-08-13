@@ -13,6 +13,7 @@ import (
 // 处理函数 [这个地方注意 传入函数的处理方法]
 type handlerFunc func(*ReqCtx)
 
+// # 相当于对请求所有封装
 type ReqCtx struct {
 	GinCtx             *gin.Context        //gin  context
 	RequiredPermission *Permission         //需要的权限信息,默认为nil, 需要校验token
@@ -60,7 +61,7 @@ func (rc *ReqCtx) Handle(handler handlerFunc) {
 	}
 }
 
-func (rc *ReqCtx) DownLoad(reader io.Reader, filename string) {
+func (rc *ReqCtx) Download(reader io.Reader, filename string) {
 	rc.NoRes = true
 	ginx.DownLoad(rc.GinCtx, reader, filename)
 }

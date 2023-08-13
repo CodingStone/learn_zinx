@@ -14,9 +14,9 @@ func InitRoleRouter(router *gin.RouterGroup) {
 		ResourceApp: application.GetResourceApp(),
 	}
 	db := router.Group("sys/roles")
-	{
+	{ // 仅仅是相当于代码块作用
 
-		db.GET("", func(c *gin.Context) {
+		db.GET("", func(c *gin.Context) { // 获得路径
 			ctx.NewReqCtxWithGin(c).Handle(r.Roles)
 		})
 

@@ -40,7 +40,7 @@ func InitAccountRouter(router *gin.RouterGroup) {
 			ctx.NewReqCtxWithGin(c).Handle(a.AccountInfo)
 		})
 
-		// 更新个人账号信息
+		// 更新个人账号信息【注意和上面方法不一致]
 		account.PUT("/self", func(c *gin.Context) {
 			ctx.NewReqCtxWithGin(c).Handle(a.UpdateAccount)
 		})

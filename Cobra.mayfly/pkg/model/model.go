@@ -2,15 +2,12 @@ package model
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"learn_zinx/Cobra.mayfly/pkg/biz"
 	"learn_zinx/Cobra.mayfly/pkg/global"
-
 	"strconv"
-
 	"strings"
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Model struct {
@@ -82,7 +79,7 @@ func GetByIdIn(model interface{}, list interface{}, ids []uint64, orderBy ...str
 	global.Db.Model(model).Where("id in (?)", ids).Order(orderByStr).Find(list)
 }
 
-// 根据id列表查询
+// 根据id列查询数据总量
 func CountBy(model interface{}) int64 {
 	var count int64
 	global.Db.Model(model).Where(model).Count(&count)
@@ -134,7 +131,6 @@ func ListByOrder(model interface{}, list interface{}, order ...string) {
 // 若 error不为nil，则为不存在该记录
 func GetBy(model interface{}, cols ...string) error {
 	// # 查询 数据基础类
-	fmt.Printf("global.Db is: %+v", global.Db)
 	return global.Db.Select(cols).Where(model).First(model).Error
 }
 

@@ -7,8 +7,8 @@ import (
 
 type Machine struct {
 	model.Model
-	ProjectId          uint64 `json:"projectId"`
-	ProjectName        string `json:"projectName"`
+	ProjectId          uint64 `json:"projectId"`   // 数据库中字段缺失，补充字段。项目名称
+	ProjectName        string `json:"projectName"` // 数据库中字段缺失，补充字段。项目name
 	Name               string `json:"name"`
 	Ip                 string `json:"ip"`         // IP地址
 	Username           string `json:"username"`   // 用户名
